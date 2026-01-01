@@ -5,7 +5,6 @@ html {
 body {
     font-family: 'Courier New', Courier, monospace;
     height: 100vh;
-    padding-top: 50px;
     margin: 0;
     background: #7ec850;
     display: flex;
@@ -14,9 +13,15 @@ body {
     justify-content: center;
 }
 
-h2 {
+h1 {
     margin-bottom: 20px;
     color: #2b2b2b;
+}
+
+.points {
+    display: grid;
+    grid-template-columns: repeat(2, 100px);
+    margin-bottom: 30px;
 }
 
 .game-board {
@@ -34,3 +39,22 @@ h2 {
     box-shadow: inset 0 10px 0 rgba(0, 0, 0, 0.2);
 }
 
+.btnGameRestart {
+    display: block;
+    margin-top: 25px;
+    margin-bottom: 30px;
+    /* Toggled by JS usually */
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #c4d1e8;
+    background: #762ae9;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.btnGameRestart:hover {
+    background: #48088e;
+}
