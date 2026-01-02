@@ -1,33 +1,62 @@
 const bonk = document.getElementById('soundBonk');
 const gameBoard = document.querySelector('.game-board');
-const moles = document.querySelectorAll('.mole');
+const moleList = document.querySelectorAll('.mole');
 const btnGameReset = document.getElementById('gameReset');
 const btnGameStart = document.getElementById('gameStart');
+const scoreTxt = document.querySelector('.score');
+const missesTxt = document.querySelector('.misses');
 
 let gameInterval;
 let gameRunning = false;
 
+let points = 0;
+let misses = 0; 
+
 function showAllMoles() {
-    moles.forEach(mole => mole.classList.add('up'));
+    moleList.forEach(mole => mole.classList.add('up'));
 }
 
 showAllMoles();
 
+// hit mole
+moleList.forEach(mole => {
+    mole.addEventListener('click', (e) => {
+        if (!gameRunning) return;
+
+        e.stopPropagation(); // prevent event bubbling
+
+        if (mole.classList.contains('up')) {
+            points++;
+            updatePoints();
+        } else {
+            misses++;
+            updatePoints();
+        }
+
+        mole.classList.remove('up');
+
+        bonk.pause();
+        bonk.currentTime = 0;
+        bonk.play().catch(() => {});
+    })
+});
+
 // random mole
 function randomMole() {
-    moles.forEach(mole => {
+    moleList.forEach(mole => {
         // hid moles
         mole.classList.remove('up');
     });
 
     // pick random index 
-    const ranIndx = Math.floor(Math.random() * moles.length);
+    const ranIndx = Math.floor(Math.random() * moleList.length);
 
-    moles[ranIndx].classList.add('up');
+    moleList[ranIndx].classList.add('up');
 }
 
 btnGameStart.addEventListener('click', () => {
     gameRunning = true;
+    updatePoints();
 
     // prevent multival input
     clearInterval(gameInterval);
@@ -42,7 +71,10 @@ btnGameStart.addEventListener('click', () => {
 btnGameReset.addEventListener('click', () => {
     clearInterval(gameInterval);
     gameRunning = false;
-    document.body.style.cursor = "default";
+    points = 0;
+    misses = 0;
+    updatePoints();
+    gameBoard.style.cursor = "default";
     showAllMoles();
 })
 
@@ -59,3 +91,9 @@ gameBoard.addEventListener('click', () => {
         console.log("Audio play failed:", err);
     });
 });
+
+// update points 
+function updatePoints() {
+    scoreTxt.textContent = `Points: ${points}`;
+    missesTxt.textContent = `Misses: ${misses}`;
+}
