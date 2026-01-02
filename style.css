@@ -39,6 +39,16 @@ h1 {
     box-shadow: inset 0 10px 0 rgba(0, 0, 0, 0.2);
 }
 
+.mole {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color: wheat;
+}
+
 .btnGameRestart {
     display: block;
     margin-top: 25px;
