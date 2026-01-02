@@ -5,6 +5,7 @@ const btnGameReset = document.getElementById('gameReset');
 const btnGameStart = document.getElementById('gameStart');
 
 let gameInterval;
+let gameRunning = false;
 
 function showAllMoles() {
     moles.forEach(mole => mole.classList.add('up'));
@@ -26,8 +27,11 @@ function randomMole() {
 }
 
 btnGameStart.addEventListener('click', () => {
+    gameRunning = true;
+
     // prevent multival input
     clearInterval(gameInterval);
+    gameBoard.style.cursor = "url('./Img/hammer.png'), auto";
 
     // mole apper every 600 milisecond
     setTimeout(() => {
@@ -37,12 +41,16 @@ btnGameStart.addEventListener('click', () => {
 
 btnGameReset.addEventListener('click', () => {
     clearInterval(gameInterval);
+    gameRunning = false;
+    document.body.style.cursor = "default";
     showAllMoles();
 })
 
 
 // hammer sfx when clicked
 gameBoard.addEventListener('click', () => {
+    if (!gameRunning) return;
+
     bonk.pause();          // stop current playback
     bonk.currentTime = 0;  // rewind to start
     bonk.volume = 1.0;
