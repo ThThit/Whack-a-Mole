@@ -78,7 +78,6 @@ btnGameReset.addEventListener('click', () => {
     showAllMoles();
 })
 
-
 // hammer sfx when clicked
 gameBoard.addEventListener('click', () => {
     if (!gameRunning) return;
